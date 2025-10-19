@@ -23,7 +23,7 @@ body::before {
 .screen {
   position:relative; flex:none; width:40vh; height:70vh; background:#111;
   border-radius:16px; border:2px solid #0ff; scroll-snap-align:center;
-  display:flex; flex-direction:column; align-items:center; justify-content:space-between;
+  display:flex; flex-direction:column; align-items:center; justify-content:flex-start;
   padding:15px; text-align:center;
   box-shadow:0 0 15px rgba(0,255,255,0.5);
   transition:transform 0.3s ease, box-shadow 0.3s ease;
@@ -36,7 +36,7 @@ body::before {
 .header {
   color:#0ff; font-weight:bold; font-size:16px;
   text-align:center; padding:8px 10px; border-bottom:1px solid #0ff;
-  width:100%; text-shadow:0 0 10px #0ff;
+  width:100%; text-shadow:0 0 10px #0ff; margin-bottom:10px;
 }
 
 .image { width:80px; height:80px; border-radius:12px; overflow:hidden; margin-top:10px; box-shadow:0 0 10px #0ff; }
@@ -49,10 +49,6 @@ body::before {
   margin-top:8px;
 }
 .button:hover { background-color:#00ffff80; box-shadow:0 0 20px #0ff; transform:scale(1.05); }
-
-.credit {
-  color:#0ff; font-size:12px; margin-top:5px; text-shadow:0 0 8px #0ff;
-}
 
 .action-buttons {
   position:absolute; bottom:25px; display:flex; justify-content:center;
@@ -90,13 +86,35 @@ body::before {
   text-shadow:0 0 10px #0ff;
   z-index:999;
 }
+
+/* Fullscreen overlay for iframe */
+#iframeFullscreen {
+  display:none; position:fixed; top:0; left:0; width:100%; height:100%;
+  background:#000; z-index:9999; justify-content:center; align-items:center;
+}
+#iframeFullscreen iframe {
+  width:100%; height:100%; border:none;
+}
+#iframeFullscreen button {
+  position:absolute; top:10px; right:10px; padding:10px 15px;
+  border:none; background:#0ff; color:#000; font-weight:bold;
+  border-radius:10px; cursor:pointer; text-shadow:0 0 8px #0ff;
+}
+#iframeFullscreen button:hover { background:#00ffff80; }
+
+.fullscreenIcon {
+  position:absolute; top:5px; right:5px; font-size:16px; cursor:pointer;
+  background:#0ff; color:#000; border-radius:50%; padding:3px; text-align:center;
+  box-shadow:0 0 8px #0ff;
+}
+.fullscreenIcon:hover { background:#00ffff80; }
 </style>
 </head>
 <body>
 
 <div id="loadingScreen">
   <div class="notification-box">
-    <h2>Pro Cloud Phone v2</h2>
+    <h2>Pro Device</h2>
     <p>Mon Cloud</p>
     <div>
       <button onclick="showContent()">OK</button>
@@ -123,17 +141,30 @@ body::before {
     <div class="button" onclick='window.open("https://www.uptoplay.net/runapk/create-androidapkxx.php","_blank")'>Play Now</div>
   </div>
 
-  <!-- Screen 3: UGMod -->
-  <div class="screen">
-    <div class="header">UGMod</div>
-    <div class="image">
-      <img src="https://play-lh.googleusercontent.com/3EEJLviqFWAuHJWpmILUotvTfaFtV34KaEDoZrYAhGziOGVaHNbRZ1z7xwG-VdcdxQs=w240-h480-rw" alt="UGMod">
+  <!-- Cluster Screens 1-5 -->
+  <script>
+  const clusterImage = "https://raw.githubusercontent.com/Monmon9ne/Mon_Hub/refs/heads/main/Screenshot_20251019_214746_Chrome.jpg";
+  for(let i=1;i<=1;i++){
+    document.write(`
+    <div class="screen">
+      <div class="header">Cluster ${i}</div>
+      <div class="image"><img src="${clusterImage}" alt="Cluster"></div>
+      <div class="button" onclick="toggleClusterIframe(${i})">Play Now</div>
+      <div id="clusterFrameContainer${i}" style="display:none; width:100%; height:60%; margin-top:10px; border-radius:12px; overflow:hidden; box-shadow:0 0 15px #0ff; position:relative;">
+        <iframe id="clusterFrame${i}" src="" style="width:100%; height:100%; border:none;"></iframe>
+        <div class="fullscreenIcon" onclick="openFullscreen(${i})">⤢</div>
+      </div>
     </div>
-    <div class="credit">YT Credit: TunoQac (@Tuan-no-Quac)</div>
-    <div class="button" onclick='window.open("https://ugmod.page.gd/b/index.html/","_blank")'>Play Now</div>
-    <div class="button" onclick="copyYT()">Copy UGMod Owner YT</div>
-  </div>
+    `);
+  }
+  </script>
 
+</div>
+
+<!-- Fullscreen overlay -->
+<div id="iframeFullscreen" style="display:flex;">
+  <iframe id="fullscreenFrame" src=""></iframe>
+  <button onclick="closeFullscreen()">Close</button>
 </div>
 
 <div class="action-buttons">
@@ -172,13 +203,34 @@ function showContent(){
   document.getElementById("mainContent").style.display="flex";
 }
 
-// Copy YouTube link
-function copyYT() {
-  const ytLink = "https://youtube.com/@tuan-no-quac?si=uIDqJrd8d_vnMM0a";
-  navigator.clipboard.writeText(ytLink).then(() => {
-    alert("YouTube link copied to clipboard!");
-  });
+// Toggle cluster iframe
+function toggleClusterIframe(n){
+  const container = document.getElementById("clusterFrameContainer"+n);
+  const frame = document.getElementById("clusterFrame"+n);
+  if(container.style.display === "none"){
+    frame.src = "https://uproxy.online/ultraviolet/hvtrs8%2F-nmw%2Cge%2Fcprs-cnuqtgr%2Filc-9355%2Falwsvep.jtol";
+    container.style.display = "block";
+  } else {
+    frame.src = "";
+    container.style.display = "none";
+  }
 }
+
+// Fullscreen
+function openFullscreen(n){
+  const frame = document.getElementById("clusterFrame"+n);
+  const fullscreen = document.getElementById("iframeFullscreen");
+  const fullFrame = document.getElementById("fullscreenFrame");
+  fullFrame.src = frame.src;
+  fullscreen.style.display = "flex";
+}
+function closeFullscreen(){
+  const fullscreen = document.getElementById("iframeFullscreen");
+  const fullFrame = document.getElementById("fullscreenFrame");
+  fullFrame.src = "";
+  fullscreen.style.display = "none";
+}
+closeFullscreen()
 </script>
 
 </body>

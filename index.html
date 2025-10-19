@@ -1,15 +1,13 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Cloud Phone Mon</title>
 <style>
-/* ===== Reset & cơ bản ===== */
 * { margin:0; padding:0; box-sizing:border-box; font-family: Arial,sans-serif; }
 body { height:100vh; overflow:hidden; background:#000; display:flex; justify-content:center; align-items:center; }
 
-/* ===== Glow xanh toàn màn hình ===== */
 body::before {
   content:"";
   position:fixed; top:0; left:0; right:0; bottom:0;
@@ -17,13 +15,11 @@ body::before {
   z-index:0; pointer-events:none;
 }
 
-/* ===== Container chính ===== */
 .container {
   display:flex; overflow-x:auto; scroll-snap-type:x mandatory;
   gap:40px; padding:20px; height:90vh; z-index:1; scroll-behavior:smooth;
 }
 
-/* ===== Scroll Snap Screen ===== */
 .screen {
   position:relative; flex:none; width:40vh; height:70vh; background:#111;
   border-radius:16px; border:2px solid #0ff; scroll-snap-align:center;
@@ -37,26 +33,27 @@ body::before {
   box-shadow:0 0 25px #0ff,0 0 50px #0ff80;
 }
 
-/* ===== Header ===== */
 .header {
   color:#0ff; font-weight:bold; font-size:16px;
   text-align:center; padding:8px 10px; border-bottom:1px solid #0ff;
   width:100%; text-shadow:0 0 10px #0ff;
 }
 
-/* ===== Image ===== */
 .image { width:80px; height:80px; border-radius:12px; overflow:hidden; margin-top:10px; box-shadow:0 0 10px #0ff; }
 .image img { width:100%; height:100%; object-fit:cover; }
 
-/* ===== Button ===== */
 .button {
   background-color:#0ff; color:#000; font-weight:bold; padding:10px 18px;
   border-radius:12px; cursor:pointer; transition:0.3s;
   text-shadow:0 0 8px #0ff; box-shadow:0 0 10px #0ff;
+  margin-top:8px;
 }
 .button:hover { background-color:#00ffff80; box-shadow:0 0 20px #0ff; transform:scale(1.05); }
 
-/* ===== Action Buttons dưới ===== */
+.credit {
+  color:#0ff; font-size:12px; margin-top:5px; text-shadow:0 0 8px #0ff;
+}
+
 .action-buttons {
   position:absolute; bottom:25px; display:flex; justify-content:center;
   gap:50px; width:100%; z-index:2;
@@ -68,10 +65,8 @@ body::before {
 }
 .action-buttons div span { display:block; font-size:13px; color:#0ff; margin-top:5px; }
 
-/* ===== Scrollbar ẩn ===== */
 .container::-webkit-scrollbar { display:none; }
 
-/* ===== Loading Screen ===== */
 #loadingScreen {
   position:fixed; top:0; left:0; right:0; bottom:0;
   background:rgba(0,0,0,0.85); display:flex; justify-content:center; align-items:center; z-index:9999;
@@ -89,7 +84,6 @@ body::before {
   background-color:#00ffff80; box-shadow:0 0 15px #0ff;
 }
 
-/* ===== Chữ Mon Cloud góc trên ===== */
 .mon-cloud-label {
   position:fixed; top:15px; right:20px;
   color:#0ff; font-weight:bold; font-size:18px;
@@ -100,13 +94,12 @@ body::before {
 </head>
 <body>
 
-<!-- Loading -->
 <div id="loadingScreen">
   <div class="notification-box">
-    <h2>Cloud No key :)</h2>
+    <h2>Pro Cloud Phone v2</h2>
     <p>Mon Cloud</p>
     <div>
-      <button onclick="showContent()">ok</button>
+      <button onclick="showContent()">OK</button>
       <button onclick="showContent()">🤑</button>
     </div>
   </div>
@@ -114,30 +107,39 @@ body::before {
 
 <div class="mon-cloud-label">Mon Cloud</div>
 
-<!-- Container chính -->
 <div class="container" id="mainContent" style="display:none;">
 
-<!-- ==== Tất cả các screen ==== -->
-<div class="screen">
-  <div class="header">Mon Android</div>
-  <div class="image"><img src="https://www.myandroid.org/images/xmyandroidicon128.png.pagespeed.ic.nB6A5cnErR.png" alt="App"></div>
-  <div class="button" onclick='window.open("https://www.myandroid.org/run/start.php","_blank")'>Play</div>
+  <!-- Screen 1 -->
+  <div class="screen">
+    <div class="header">Mon Android</div>
+    <div class="image"><img src="https://www.myandroid.org/images/xmyandroidicon128.png.pagespeed.ic.nB6A5cnErR.png" alt="App"></div>
+    <div class="button" onclick='window.open("https://www.myandroid.org/run/start.php","_blank")'>Play Now</div>
+  </div>
+
+  <!-- Screen 2 -->
+  <div class="screen">
+    <div class="header">Android Lite</div>
+    <div class="image"><img src="https://meolazy.github.io/Main/adr_lite.png" alt="App"></div>
+    <div class="button" onclick='window.open("https://www.uptoplay.net/runapk/create-androidapkxx.php","_blank")'>Play Now</div>
+  </div>
+
+  <!-- Screen 3: UGMod -->
+  <div class="screen">
+    <div class="header">UGMod</div>
+    <div class="image">
+      <img src="https://play-lh.googleusercontent.com/3EEJLviqFWAuHJWpmILUotvTfaFtV34KaEDoZrYAhGziOGVaHNbRZ1z7xwG-VdcdxQs=w240-h480-rw" alt="UGMod">
+    </div>
+    <div class="credit">YT Credit: TunoQac (@Tuan-no-Quac)</div>
+    <div class="button" onclick='window.open("https://ugmod.page.gd/b/index.html/","_blank")'>Play Now</div>
+    <div class="button" onclick="copyYT()">Copy UGMod Owner YT</div>
+  </div>
+
 </div>
 
-<div class="screen">
-  <div class="header">Android Lite</div>
-  <div class="image"><img src="https://meolazy.github.io/Main/adr_lite.png" alt="App"></div>
-  <div class="button" onclick='window.open("https://www.uptoplay.net/runapk/create-androidapkxx.php","_blank")'>Play</div>
-</div>
-
-<!-- Tiếp tục copy tất cả screen còn lại từ HTML gốc -->
-</div>
-
-<!-- Nút hành động dưới cùng -->
 <div class="action-buttons">
   <div>
     <img src="https://i.imgur.com/j1NXC8M.png" onclick="location.reload();">
-    <span>Làm mới</span>
+    <span>Refresh</span>
   </div>
 </div>
 
@@ -163,12 +165,19 @@ function highlightCenterScreen() {
 container.addEventListener('scroll', () => {
   requestAnimationFrame(highlightCenterScreen);
 });
-
 window.addEventListener('load', highlightCenterScreen);
 
 function showContent(){
   document.getElementById("loadingScreen").style.display="none";
   document.getElementById("mainContent").style.display="flex";
+}
+
+// Copy YouTube link
+function copyYT() {
+  const ytLink = "https://youtube.com/@tuan-no-quac?si=uIDqJrd8d_vnMM0a";
+  navigator.clipboard.writeText(ytLink).then(() => {
+    alert("YouTube link copied to clipboard!");
+  });
 }
 </script>
 
